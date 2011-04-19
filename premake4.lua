@@ -7,11 +7,6 @@
 if not _OPTIONS["to"] then
 	_OPTIONS["to"] = "."
 end
-
-if not _OPTIONS["scripts"] then
-	_OPTIONS["scripts"] = "Scripts"
-end
-
 --
 -- MonoEmbed
 --
@@ -39,16 +34,16 @@ solution "MonoEmbed"
 		flags       { "OptimizeSpeed" }
 		
 	configuration { "Debug", "x32" }
-		targetdir   "Bin/Debug"
+		targetdir   "bin/Debug"
 		
 	configuration { "Debug", "x64" }
-		targetdir   "Bin/Debug64"
+		targetdir   "bin/Debug64"
 		
 	configuration { "Release", "x32" }
-		targetdir   "Bin/Release"
+		targetdir   "bin/Release"
 		
 	configuration { "Release", "x64" }
-		targetdir   "Bin/Release64"
+		targetdir   "bin/Release64"
 		
 		
 --
@@ -98,14 +93,28 @@ solution "MonoEmbed"
 				"pthread"
 			}
 			defines { "_THREAD_SAFE" }
+			
+		configuration "windows"
+			includedirs { "C:\\Program Files (x86)\\Mono-2.10.1\\include\\mono-2.0" }
+			libdirs { "C:\\Program Files (x86)\\Mono-2.10.1\\lib" }
+			links { "mono" }
+			defines { "_THREAD_SAFE" }
+			
+		configuration { "vs2010" }
+			postbuildcommands
+			{
+				"copy /Y "C:\Program Files (x86)\Mono-2.10.1\bin\mono-2.0.dll" "$(ProjectDir)bin\$(Configuration)\""
+			}
+			
 
 --
 -- A more thorough cleanup.
 --
 
 if _ACTION == "clean" then
-	os.rmdir("Bin")
-	os.rmdir("Build")
+	os.rmdir("bin")
+	os.rmdir("build")
+	os.rmdir("obj")
 elseif os.is("macosx") then
 	printf("Cleaning user files...")
 	local filesToRemove = { "*.pbxuser", "*.xcuserdatad" }
