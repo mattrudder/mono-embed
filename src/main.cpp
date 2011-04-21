@@ -9,25 +9,28 @@
 
 #include <stdlib.h>
 
+#include "main.h"
 #include "GameState.h"
 using namespace Talon;
 
-void run_simulation(const char* szFilename, MonoDomain* domain)
+void run_simulation()
 {
-	MonoAssembly* asmScript = mono_domain_assembly_open(domain, szFilename);
+	MonoAssembly* asmScript = ScriptProvider::ScriptAssembly;
 	if (asmScript)
 	{
 		MonoImage* image = mono_assembly_get_image(asmScript);
 		MonoClass* klass = mono_class_from_name(image, "TalonScript", "GameState");
 		
-		MonoObject* gameState = mono_object_new(domain, klass);
+		MonoObject* gameState = mono_object_new(ScriptProvider::ScriptDomain, klass);
 		mono_runtime_object_init(gameState);
 		
 		MonoMethod* updateMethod = mono_class_get_method_from_name(klass, "Update", 1);
 		
 		typedef bool (*UpdateFunc)(MonoObject*, float);
 		//UpdateFunc fnUpdate = (UpdateFunc)mono_method_get_unmanaged_thunk(updateMethod);
-		
+		//GameState state;
+		//state.Activate();
+
 		float fDelta = 0.0f;
 		bool bRunning = true;
 		while (bRunning)
@@ -52,21 +55,22 @@ void run_simulation(const char* szFilename, MonoDomain* domain)
 			
 			fDelta += 0.1f;
 		}
+
+		//state.Deactivate();
 	}
 }
 
 int main(int argc, const char** argv)
 {
-	MonoDomain* domain;
+	
 //	mono_config_parse(NULL);
 	
-	const char* szScriptAssembly = "Talon.Sandbox.Script.dll";
-	domain = mono_jit_init(szScriptAssembly);
+	ScriptProvider::Initialize();
 	
-	printf("GameState::TypeName = %s", GameState::TypeName);
-	run_simulation(szScriptAssembly, domain);
+	printf("[main] GameState::TypeName = %s\n", GameState::Type.GetName());
+	run_simulation();
 	
-	mono_jit_cleanup(domain);
+	ScriptProvider::Shutdown();
 	
 	return 0;
 }

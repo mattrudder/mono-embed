@@ -19,6 +19,7 @@ namespace TalonScript
 		}
 		
 		// Virtual methods called by the engine runtime.
+		[Native]
 		protected virtual void OnActivated()
 		{
 		}
@@ -27,9 +28,29 @@ namespace TalonScript
 		{
 		}
 		
-		// Private (by convention) methods with native implementations
-		// Internal call vs P/Invoke
+		// --- Exposing managed code easily ---
+		// Attempt 1: Attribute-marked code generation
+		// [NativeVisibleAttribute] marked methods generate function definitions before native build
+		// 
+		// C#:
+		//		[NativeVisible]
+		//		protected virtual void OnActivated() { }
+		//
+		// MonoGenerated/GameState.h:
+		//	protected:
+		//		virtual OnActivated();
+		//
+		// MonoGenerated/GameState.cpp:
+		// 		GameState::OnActivated()
+		//		{
+		//			
+		//		}
 		
+		
+		
+		
+		// Private (by convention) methods with native implementations
+		// Internal call via monobind
 		
 		float m_fStoppingPoint;
 	}

@@ -1,0 +1,10 @@
+/*.ReSharper.user
+/*.opensdf
+/*.sdf
+/_ReSharper.MonoEmbed/
+/*.suo
+/bin/
+/ipch/
+/obj/
+/*.vcxproj.filters
+/*.vcxproj.user

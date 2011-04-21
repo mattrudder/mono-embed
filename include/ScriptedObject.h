@@ -1,7 +1,21 @@
 
 #pragma once
 
-#define IDENT_NAME(x) #x
+#include "ScriptType.h"
+
+extern "C" {
+//#include <gc.h>
+#include <mono/jit/jit.h>
+#include <mono/metadata/mono-config.h>
+#include <mono/metadata/environment.h>
+#include <mono/metadata/assembly.h>
+}
+
+#include <monobind/function.hpp>
+#include <monobind/class.hpp>
+#include <monobind/namespace.hpp>
+#include <monobind/scope.hpp>
+#include <monobind/module.hpp>
 
 namespace Talon
 {
@@ -9,7 +23,7 @@ namespace Talon
 	class ScriptedObject
 	{
 	public:
-		static const char* TypeName;
+		static ScriptType Type;
 	private:
 
 	};

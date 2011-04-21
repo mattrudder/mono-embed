@@ -56,19 +56,27 @@ solution "MonoEmbed"
 		location 	( _OPTIONS["to"] )
 		language    "C++"
 		kind        "ConsoleApp"
-		flags       { "FatalWarnings", "NoExceptions", "NoRTTI", "FloatFast" }
+		flags       { "FatalWarnings", "NoRTTI", "FloatFast" }
 
 		includedirs 
 		{ 
 			"src/",
 			"include/",
+			"third-party/boost-1.45.0/include",
 		}
 
 		files 
 		{
 			"src/*.cpp", 
 			"src/*.h", 
+			"src/monobind/*.cpp",
+			"src/monobind/*.hpp",
 			"include/*.h",
+		}
+		
+		defines
+		{
+			"BOOST_NO_TYPEID",
 		}
 
 		configuration "macosx"
@@ -100,12 +108,11 @@ solution "MonoEmbed"
 			links { "mono" }
 			defines { "_THREAD_SAFE" }
 			
-		configuration { "vs2010" }
+		configuration "vs2010"
 			postbuildcommands
 			{
-				"copy /Y "C:\Program Files (x86)\Mono-2.10.1\bin\mono-2.0.dll" "$(ProjectDir)bin\$(Configuration)\""
-			}
-			
+				"copy /Y \"C:\\Program Files (x86)\\Mono-2.10.1\\bin\\mono-2.0.dll\" \"$(ProjectDir)bin\\$(Configuration)\\\""
+			}	
 
 --
 -- A more thorough cleanup.
