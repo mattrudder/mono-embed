@@ -24,6 +24,7 @@ namespace TalonScript
 		{
 		}
 		
+		[Native]
 		protected virtual void OnDeactivated()
 		{
 		}

@@ -1,0 +1,13 @@
+﻿<#@ import namespace="GenerateWrappers" #>
+
+<#+
+    public string GetNativeArgumentList(MethodModel method)
+    {
+	    return "arguments";
+	}
+    
+    public string GetNativeReturnType(MethodModel method)
+    {
+	    return "void";
+    }
+#>

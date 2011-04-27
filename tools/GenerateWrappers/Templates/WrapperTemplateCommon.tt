@@ -1,0 +1,14 @@
+﻿<#@ import namespace="GenerateWrappers" #>
+
+<#+
+	public ClassModel Class;
+    public string OutputExtention;
+
+    public string WrapperFilename
+    {
+		get
+		{
+			return Class.Name + OutputExtention;
+		}
+    }
+#>
