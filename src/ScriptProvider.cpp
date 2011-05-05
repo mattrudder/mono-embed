@@ -17,9 +17,10 @@ namespace Talon
 		const char* szScriptAssembly = "TalonScript.dll";
 		ScriptDomain = mono_jit_init(szScriptAssembly);
 		ScriptAssembly = mono_domain_assembly_open(ScriptDomain, szScriptAssembly);
+		ScriptAssemblyImage = mono_assembly_get_image(ScriptAssembly);
 
 		Module.SetDomain(ScriptDomain);
-		Module.SetImage(mono_assembly_get_image(ScriptAssembly));
+		Module.SetImage(ScriptAssemblyImage);
 
 		printf("Mapping Scripted Types:\n");
 		std::vector<ScriptType*>::iterator itCurrent = s_registeredTypes->begin();

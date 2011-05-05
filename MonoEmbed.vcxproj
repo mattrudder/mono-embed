@@ -227,6 +227,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h" />
+    <ClInclude Include="include\ScriptConversions.h" />
     <ClInclude Include="include\ScriptProvider.h" />
     <ClInclude Include="src\monobind\class.hpp" />
     <ClInclude Include="src\monobind\config.hpp" />

@@ -1,0 +1,119 @@
+﻿<#@ template language="C#" debug="true" hostspecific="true" #>
+<#@ output extension=".g.cpp" encoding="utf-8" #>
+<#@ import namespace="Talon.Utility" #>
+<#
+	TypeDefinition Class = (TypeDefinition) Host.GetHostOption("Class");
+#>
+// GENERATED CODE -- DO NOT EDIT
+// Class name: <#= Class.FullName #>
+
+	<#= Class.Name #>::<#= Class.Name #>(MonoObject* pObject)
+		: Scriptable<<#= Class.Name #>>(pObject)
+	{
+	}
+
+<#
+// TODO: Generate instance variables needed for the native -> managed bridge.
+foreach (MethodDefinition method in Class.Methods.FilterWrappableMethods())
+{
+#>
+	void* <#= Class.Name #>::s_fn<#= method.Name #> = NULL;
+<#
+}
+#>
+	const char* Scriptable<<#= Class.Name #>>::GetScriptNamespace() const { return "<#= Class.Namespace #>"; }
+	const char* Scriptable<<#= Class.Name #>>::GetScriptName() const { return "<#= Class.Name #>"; }
+<#
+foreach (MethodDefinition method in Class.Methods.FilterWrappableMethods())
+{
+	bool bHasReturnValue = method.ReturnType.Name != "Void";
+	
+	List<string> parameterTypesNative = method.Parameters.Select(p => p.ParameterType.GetNativeType()).ToList();
+	List<string> parameterTypesThunk = method.Parameters.Select(p => p.ParameterType.GetThunkType()).ToList();
+	List<string> parameterTypes = method.Parameters.Select(p => p.ParameterType.Name).ToList();
+	List<string> parameterList = method.Parameters.Select(p => p.Name).ToList();
+#>	
+	<#= method.GetNativeReturnType() #> <#= Class.Name #>::<#= method.Name #>(<#= method.GetNativeArgumentList() #>)
+	{
+		VerifyLifetime();
+		typedef <#= method.GetThunkReturnType() #> (MONO_THUNK_DECL *ThunkType) (MonoObject*<#= parameterTypesNative.Count > 0 ? ", " : "" #><#= parameterTypesThunk.Join(", ") #>, MonoException**);
+
+		if (s_fn<#= method.Name #> == NULL)
+		{ 
+			MonoMethod* monoMethod = GetMethod("<#= method.Name.ToLower() #>", "<#= parameterTypes.Select(s => s.ToLower()).Join(",") #>", GetMonoClass());
+			s_fn<#= method.Name #> = mono_method_get_unmanaged_thunk(monoMethod);
+		}
+			
+<#
+		// TODO: Convert native method parameters to thunk types.
+		int nParameterIndex = 0;
+		foreach (ParameterDefinition parameter in method.Parameters)
+		{
+			string parameterName = parameterList[nParameterIndex];
+			string convertedParameterName = "mono_" + parameterName;
+			if (parameter.ParameterType.IsWrapperType())
+			{
+#>
+		<#= parameterName #>->VerifyLifetime();
+		MonoObject* <#= convertedParameterName #> = <#= parameterName #>->GetMonoObject();
+<#
+				parameterList[nParameterIndex] = convertedParameterName;
+			}
+			else
+			{
+				TypeConversionInfo info  = parameter.ParameterType.GetTypeConversionInfo();
+				if (info != null && info.ThunkType != null)
+				{
+#>
+		<#= info.ThunkType #> <#= convertedParameterName #> = Script::TypeConverter<<#= info.NativeType #>, <#= info.ThunkType #>>().Convert(<#= parameterName #>);
+<#
+				parameterList[nParameterIndex] = convertedParameterName;
+				}
+			}
+			
+			++nParameterIndex;
+		}
+#>
+		
+		MonoException* pException = NULL;
+<# 		if (bHasReturnValue) { #>
+		<#= method.GetThunkReturnType() #> returnValue = (*((ThunkType)s_fn<#= method.Name #>))(GetMonoObject()<#= parameterList.Count > 0 ? ", " : "" #><#= parameterList.Join(", ") #>, &pException);
+<# 		} else { #>
+		(*((ThunkType)s_fn<#= method.Name #>))(GetMonoObject()<#= parameterList.Count > 0 ? ", " : "" #><#= parameterList.Join(", ") #>, &pException);
+<# 		} #>
+		
+		if (pException != NULL)
+			LogScriptException(pException);
+		
+<#		if (bHasReturnValue)
+		{	
+			if (method.ReturnType.IsWrapperType())
+			{
+#>
+		return new <#= Class.Name#>(returnValue);
+<#
+			}
+			else
+			{
+				TypeConversionInfo info  = method.ReturnType.GetTypeConversionInfo();
+				if (info != null && info.ThunkType != null)
+				{
+#>
+		return Script::TypeConverter<<#= info.ThunkType #>, <#= info.NativeType #>>().Convert(returnValue);
+<# 	
+				}
+				else
+				{
+#>
+		return returnValue;
+<#
+				}
+			}
+		}
+#>
+	}
+
+<#
+}
+#>
+// END GENERATED CODE

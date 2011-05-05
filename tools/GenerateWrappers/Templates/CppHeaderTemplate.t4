@@ -1,0 +1,33 @@
+﻿<#@ template language="C#" debug="true" hostspecific="true" #>
+<#@ output extension=".g.h" encoding="utf-8" #>
+<#
+	TypeDefinition Class = (TypeDefinition) Host.GetHostOption("Class");
+#>
+// GENERATED CODE -- DO NOT EDIT
+// Class name: <#= Class.FullName #>
+
+<#
+// Generate method definitions for native -> managed bridge.
+foreach (MethodDefinition method in Class.Methods.FilterWrappableMethods())
+{
+#>
+<#= method.GetNativeProtection() #>: <#= method.GetNativeReturnType() #> <#= method.Name #>(<#= method.GetNativeArgumentList() #>);
+<#
+}
+#>
+
+public:
+	explicit <#= Class.Name #>(MonoObject* pObject);
+
+private:
+<#
+// TODO: Generate instance variables needed for the native -> managed bridge.
+foreach (MethodDefinition method in Class.Methods.FilterWrappableMethods())
+{
+#>
+	static void* s_fn<#= method.Name #>;
+<#
+}
+#>
+
+// END GENERATED CODE

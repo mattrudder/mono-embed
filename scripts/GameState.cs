@@ -3,6 +3,7 @@ using System;
 
 namespace TalonScript
 {
+	[Native]
 	public abstract class GameState
 	{	
 		GameState()
@@ -12,21 +13,33 @@ namespace TalonScript
 			Console.Error.WriteLine("Generated stopping point: {0}", m_fStoppingPoint);
 		}
 		
-		bool Update(float fTimeDelta)
+		public bool Update(float fTimeDelta, string message)
 		{
-			Console.Error.WriteLine("Updated with delta of {0}, stopping at {1}.", fTimeDelta, m_fStoppingPoint);
+			Console.Error.WriteLine("Updated with delta of {0}, stopping at {1}: {2}", fTimeDelta, m_fStoppingPoint, message);
 			return fTimeDelta < m_fStoppingPoint;
+		}
+
+		public string GetState(string message)
+		{
+			Console.Error.WriteLine("Message: {0}", message);
+			return message + " World!";
+		}
+
+		public GameState TransitionToState(GameState state)
+		{
+			Console.Error.WriteLine("Transitioning...");
+			return this;
 		}
 		
 		// Virtual methods called by the engine runtime.
-		[Native]
 		protected virtual void OnActivated()
 		{
+			Console.WriteLine("OnActivated Called!");
 		}
 		
-		[Native]
 		protected virtual void OnDeactivated()
 		{
+			Console.WriteLine("OnDeactivated Called!");
 		}
 		
 		// --- Exposing managed code easily ---

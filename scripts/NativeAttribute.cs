@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TalonScript
 {
-	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 	public class NativeAttribute : Attribute
 	{
 	}

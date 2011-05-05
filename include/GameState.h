@@ -4,7 +4,7 @@
 
 namespace Talon
 {
-	class GameState : public ScriptedObject<GameState>
+	class GameState : public Scriptable<GameState>
 	{
 	public:
 		GameState();
@@ -16,14 +16,9 @@ namespace Talon
 
 		static void ExposeScript(ScriptType& type);
 		
-	protected:
-		virtual void OnActivated();
-		virtual void OnDeactivated();
-		
 	private:
-//		static ScriptMethod* s_fnOnActivated;
-//		static ScriptMethod* s_fnOnDeactivated;
-
 		bool m_bIsActivated;
+		
+	#include "Generated/GameState.g.h"
 	};
 }

@@ -1,0 +1,9 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Release" />
+  <Config name="Debug" binpathtype="Auto">
+    <assembly path="Talon.Utility.Tests\bin\Debug\Talon.Utility.Tests.dll" />
+  </Config>
+  <Config name="Release" binpathtype="Auto">
+    <assembly path="Talon.Utility.Tests\bin\Release\Talon.Utility.Tests.dll" />
+  </Config>
+</NUnitProject>

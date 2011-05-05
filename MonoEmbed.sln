@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalonScript", "scripts\Talo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateWrappers", "tools\GenerateWrappers\GenerateWrappers.csproj", "{22BC18EC-BCFD-4F61-B9D9-F72B37C369DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.TextTemplating", "..\monodevelop\main\src\addins\TextTemplating\Mono.TextTemplating\Mono.TextTemplating.csproj", "{A2364D6A-00EF-417C-80A6-815726C70032}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Talon.Utility", "src\Talon.Utility\Talon.Utility.csproj", "{F0BB7927-B2DB-4E37-9807-8E697CA09F32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -42,6 +46,22 @@ Global
 		{22BC18EC-BCFD-4F61-B9D9-F72B37C369DB}.Release|Win32.Build.0 = Release|x86
 		{22BC18EC-BCFD-4F61-B9D9-F72B37C369DB}.Release|x64.ActiveCfg = Release|x86
 		{22BC18EC-BCFD-4F61-B9D9-F72B37C369DB}.Release|x64.Build.0 = Release|x86
+		{A2364D6A-00EF-417C-80A6-815726C70032}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{A2364D6A-00EF-417C-80A6-815726C70032}.Debug|Win32.Build.0 = Debug|Any CPU
+		{A2364D6A-00EF-417C-80A6-815726C70032}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A2364D6A-00EF-417C-80A6-815726C70032}.Debug|x64.Build.0 = Debug|Any CPU
+		{A2364D6A-00EF-417C-80A6-815726C70032}.Release|Win32.ActiveCfg = Release|Any CPU
+		{A2364D6A-00EF-417C-80A6-815726C70032}.Release|Win32.Build.0 = Release|Any CPU
+		{A2364D6A-00EF-417C-80A6-815726C70032}.Release|x64.ActiveCfg = Release|Any CPU
+		{A2364D6A-00EF-417C-80A6-815726C70032}.Release|x64.Build.0 = Release|Any CPU
+		{F0BB7927-B2DB-4E37-9807-8E697CA09F32}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{F0BB7927-B2DB-4E37-9807-8E697CA09F32}.Debug|Win32.Build.0 = Debug|Any CPU
+		{F0BB7927-B2DB-4E37-9807-8E697CA09F32}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F0BB7927-B2DB-4E37-9807-8E697CA09F32}.Debug|x64.Build.0 = Debug|Any CPU
+		{F0BB7927-B2DB-4E37-9807-8E697CA09F32}.Release|Win32.ActiveCfg = Release|Any CPU
+		{F0BB7927-B2DB-4E37-9807-8E697CA09F32}.Release|Win32.Build.0 = Release|Any CPU
+		{F0BB7927-B2DB-4E37-9807-8E697CA09F32}.Release|x64.ActiveCfg = Release|Any CPU
+		{F0BB7927-B2DB-4E37-9807-8E697CA09F32}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,6 +13,9 @@
 #include "GameState.h"
 using namespace Talon;
 
+MonoImage* g_asmTalonScript = NULL;
+
+
 void run_simulation()
 {
 	MonoAssembly* asmScript = ScriptProvider::ScriptAssembly;
@@ -68,7 +71,24 @@ int main(int argc, const char** argv)
 	ScriptProvider::Initialize();
 	
 	printf("[main] GameState::TypeName = %s\n", GameState::Type.GetName());
-	run_simulation();
+	GameState state;
+	state.Activate();
+	printf("Managed return: '%s'\n", state.GetState("Hello"));
+
+	GameState newState;
+	GameState* previousState = state.TransitionToState(&newState);
+
+	printf("Current state: %x, New state: %x, Previous state: %x", state.GetMonoObject(), newState.GetMonoObject(), previousState->GetMonoObject());
+
+	float fDelta = 0.0f;
+	bool bRunning = true;
+	while (bRunning)
+	{
+		bRunning = state.Update(fDelta, "win!");
+		fDelta += 0.1f;
+	}
+
+	//run_simulation();
 	
 	ScriptProvider::Shutdown();
 	

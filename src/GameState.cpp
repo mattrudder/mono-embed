@@ -5,13 +5,12 @@
 namespace Talon
 {	
 	template <>
-	ScriptType ScriptedObject<GameState>::Type("GameState", &GameState::ExposeScript);
+	ScriptType Scriptable<GameState>::Type("GameState", &GameState::ExposeScript);
+	
+#include "Generated/GameState.g.cpp"
 	
 	void GameState::ExposeScript(ScriptType& type)
 	{
-//		s_fnOnActivated = type.GetMethod("OnActivated");
-//		s_fnOnDeactivated = type.GetMethod("OnDeactivated");
-
 		using namespace monobind;
 		ScriptProvider::Module
 		[
@@ -40,16 +39,5 @@ namespace Talon
 	{
 		OnDeactivated();
 		m_bIsActivated = false;
-	}
-	
-	// Default virtual method calls on script objects forward work to script layer.
-	void GameState::OnActivated()
-	{
-//		s_fnOnActivated->Invoke(this);
-	}
-	
-	void GameState::OnDeactivated()
-	{
-//		s_fnOnDeactivated->Invoke(this);
 	}
 }
