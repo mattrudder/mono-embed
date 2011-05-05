@@ -21,7 +21,9 @@ foreach (MethodDefinition method in Class.Methods.FilterWrappableMethods())
 <#
 }
 #>
+	template<>
 	const char* Scriptable<<#= Class.Name #>>::GetScriptNamespace() const { return "<#= Class.Namespace #>"; }
+	template<>
 	const char* Scriptable<<#= Class.Name #>>::GetScriptName() const { return "<#= Class.Name #>"; }
 <#
 foreach (MethodDefinition method in Class.Methods.FilterWrappableMethods())

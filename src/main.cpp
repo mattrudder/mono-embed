@@ -76,9 +76,9 @@ int main(int argc, const char** argv)
 	printf("Managed return: '%s'\n", state.GetState("Hello"));
 
 	GameState newState;
-	GameState* previousState = state.TransitionToState(&newState);
+	//GameState* previousState = state.TransitionToState(&newState);
 
-	printf("Current state: %x, New state: %x, Previous state: %x", state.GetMonoObject(), newState.GetMonoObject(), previousState->GetMonoObject());
+//	printf("Current state: %x, New state: %x, Previous state: %x", state.GetMonoObject(), newState.GetMonoObject(), previousState->GetMonoObject());
 
 	float fDelta = 0.0f;
 	bool bRunning = true;

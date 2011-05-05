@@ -25,8 +25,10 @@ extern "C" {
 // Mono unmanaged thunks must be called as __stdcall on Windows.
 #ifdef WIN32
 #define MONO_THUNK_DECL __stdcall
+#define stricmp _stricmp
 #else
 #define MONO_THUNK_DECL
+#define stricmp strcasecmp
 #endif
 
 extern MonoImage* g_asmTalonScript;
@@ -67,14 +69,14 @@ namespace Talon
 		inline bool IsMethodMatch (const char* methodName, const char* args, MonoMethod *method)
 		{
 			const char* monoMethodName = mono_method_get_name(method);
-			bool bIsMatch = _stricmp(methodName, monoMethodName) == 0;
+			bool bIsMatch = stricmp(methodName, monoMethodName) == 0;
 			if (!bIsMatch)
 				return false;
 			if (args == NULL || args[0] == '\0')
 				return true;
 
 			const char* monoMethodSignature = mono_signature_get_desc(mono_method_signature(method), false);
-			return _stricmp(args, monoMethodSignature) == 0;
+			return stricmp(args, monoMethodSignature) == 0;
 		}
 
 	protected:

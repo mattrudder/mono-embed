@@ -34,7 +34,7 @@ void function_info::register_( MonoImage* monoImage, MonoDomain* monoDomain, con
 {
 	std::string fullFunctionName = currentScope + m_functionName;
 
-	throw std::exception( "not implemented yet" );
+	//throw std::exception( "not implemented yet" );
 
 	/*if ( function->second.second != 0 )
 	{

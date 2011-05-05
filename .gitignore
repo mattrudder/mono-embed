@@ -8,3 +8,7 @@
 /obj/
 /*.vcxproj.filters
 /*.vcxproj.user
+
+*.userprefs
+*.xcodeproj
+*.pidb

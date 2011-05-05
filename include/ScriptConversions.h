@@ -24,7 +24,7 @@ namespace Talon { namespace Script
 
 		static TReturn Convert(TInput input)
 		{
-			BOOST_STATIC_ASSERT(sizeof(T) == 0); 
+			BOOST_STATIC_ASSERT(sizeof(TReturn) == 0); 
 		}
 	};
 
